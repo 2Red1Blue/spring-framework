@@ -437,6 +437,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	protected Document doLoadDocument(InputSource inputSource, Resource resource) throws Exception {
 		return this.documentLoader.loadDocument(inputSource, getEntityResolver(), this.errorHandler,
+				//获取指定资源的验证模式
 				getValidationModeForResource(resource), isNamespaceAware());
 	}
 
