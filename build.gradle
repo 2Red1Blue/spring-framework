@@ -1,10 +1,13 @@
 buildscript {
 	repositories {
-		maven { url "https://maven.aliyun.com/nexus/content/groups/public/"}
-		maven { url "https://repo.spring.io/plugins-release" }
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+		gradlePluginPortal()
+		//maven { url "https://repo.spring.io/plugins-release" }
 	}
 	dependencies {
-		classpath("io.spring.gradle:propdeps-plugin:0.0.9.RELEASE")
+		//classpath("io.spring.gradle:propdeps-plugin:0.0.9.RELEASE")
+		classpath("gradle.plugin.cn.bestwu.gradle:propdeps-plugin:0.0.9")
 		classpath("org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.16")
 	}
 }
@@ -15,6 +18,10 @@ plugins {
 	id "org.jetbrains.kotlin.jvm" version "1.2.70" apply false
 	id "org.jetbrains.dokka" version "0.9.17"
 	id "org.asciidoctor.convert" version "1.5.7"
+
+	id "cn.bestwu.propdeps-idea" version "0.0.9"
+	id "cn.bestwu.propdeps-eclipse" version "0.0.9"
+	id("cn.bestwu.propdeps-maven") version "0.0.9"
 }
 
 ext {
@@ -61,7 +68,10 @@ configure(allprojects) { project ->
 	apply plugin: "java"
 	apply plugin: "kotlin"
 	apply plugin: "checkstyle"
-	apply plugin: "propdeps"
+	//apply plugin: "propdeps"
+	apply plugin: "cn.bestwu.propdeps-idea"
+	apply plugin: "cn.bestwu.propdeps-maven"
+	apply plugin: "cn.bestwu.propdeps-eclipse"
 	apply plugin: "test-source-set-dependencies"
 	apply plugin: "io.spring.dependency-management"
 	apply from: "${gradleScriptDir}/ide.gradle"
@@ -148,7 +158,21 @@ configure(allprojects) { project ->
 	}
 
 	repositories {
-		maven { url "https://repo.spring.io/libs-release" }
+		println "aliyun repositories ${project.name}"
+		mavenLocal()
+		//maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		//maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+		maven{ url 'https://maven.aliyun.com/repository/central'}
+		maven{ url 'https://maven.aliyun.com/repository/public'}
+		maven{ url 'https://maven.aliyun.com/repository/googlr'}
+		maven{ url 'https://maven.aliyun.com/repository/spring'}
+		//maven { url "https://repo.spring.io/libs-release" }
+		maven { url "https://repo.spring.io/plugins-release" }
+		//maven { url "https://repo.springsource.org/plugins-release" }
+		mavenCentral()
+
+		//maven { url "https://repo.spring.io/libs-spring-framework-build" }
+		//maven { url "https://repo.spring.io/snapshot" } // Reactor
 	}
 
 	dependencies {
